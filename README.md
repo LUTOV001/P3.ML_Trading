@@ -1,2 +1,2 @@
-# P3.ML_Investment
-UCB FinTech Bootcamp Project 3 : Investment Management using Machine Learning
+# P3.ML_Trading
+UCB FinTech Bootcamp Project 3 : Stock trading using Machine Learning
