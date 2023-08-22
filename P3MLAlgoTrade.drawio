@@ -1,0 +1,48 @@
+<mxfile host="app.diagrams.net" modified="2023-08-22T17:38:08.793Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36 Edg/115.0.1901.203" etag="hAP6Mbumm5tpdq7QbFVr" version="21.6.8" type="github">
+  <diagram name="Page-1" id="agtwSq01jSd82nU79yzS">
+    <mxGraphModel dx="1386" dy="2504" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-5" value="Quant.py&lt;br&gt;(Predict future stock price)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="490" y="-1220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-6" value="MLearning.py&lt;br&gt;(Run ML to determine Buy/Sell signal)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="490" y="-1030" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-12" value="&lt;h1&gt;Algo Trading Bot&lt;/h1&gt;&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="200" y="-1690" width="720" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-14" value="Inputs" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="30" y="-1570" width="220" height="470" as="geometry">
+            <mxRectangle x="30" y="-1570" width="40" height="70" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-15" value="data.py&lt;br&gt;(Data pull and process from YFinanace)" style="rounded=0;whiteSpace=wrap;html=1;" parent="ONaQT98v7ESZ-Q4DkYP0-14" vertex="1">
+          <mxGeometry x="50" y="160" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-7" value="Stocklist.py&lt;br&gt;(Filter Stock based on criteria &quot;low volatility&quot;)" style="rounded=0;whiteSpace=wrap;html=1;" parent="ONaQT98v7ESZ-Q4DkYP0-14" vertex="1">
+          <mxGeometry x="50" y="60" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-16" value="Streamlit Questions / Answers" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="450" y="-1600" width="200" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-1" value="Main.py&lt;br&gt;" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="ONaQT98v7ESZ-Q4DkYP0-16" vertex="1">
+          <mxGeometry x="60" y="50" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-18" value="app.py&lt;br&gt;(????)" style="rounded=0;whiteSpace=wrap;html=1;" parent="ONaQT98v7ESZ-Q4DkYP0-16" vertex="1">
+          <mxGeometry x="40" y="160" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-21" value="Alpaca Trading Bot" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="850" y="-1550" width="200" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-3" value="TradingStrategy.py" style="rounded=0;whiteSpace=wrap;html=1;" parent="ONaQT98v7ESZ-Q4DkYP0-21" vertex="1">
+          <mxGeometry x="40" y="130" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="ONaQT98v7ESZ-Q4DkYP0-4" value="TradingExecute.py" style="rounded=0;whiteSpace=wrap;html=1;" parent="ONaQT98v7ESZ-Q4DkYP0-21" vertex="1">
+          <mxGeometry x="40" y="230" width="120" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
