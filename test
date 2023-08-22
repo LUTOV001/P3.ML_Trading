@@ -1,0 +1,127 @@
+import datetime
+from datetime import timedelta
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import alpaca_trade_api as tradeapi
+
+class EMACrossoverBacktester:
+    def __init__(self, ticker):
+        self.ticker = ticker
+        self.api = tradeapi.REST('PKTBC9ODTMX9TPDGDP9G', 'gisYEXw1DEoKMbkK3xhGyRbUeNOsB6SJmhljkkOQ', base_url='https://paper-api.alpaca.markets')
+        self.start_date = (datetime.datetime.now() - timedelta(days=days_back)).strftime('%Y-%m-%d')
+        self.timeframes = ['5D', '10D', '15D', '20D', '30D', '50D']
+        self.best_ema_s = None
+        self.best_ema_l = None
+
+    def get_data(self, timeframe, train_size=0.7):
+        end_date = datetime.datetime.now() - datetime.timedelta(days=1)  # Subtract one day from the current date
+        end_date = end_date.strftime('%Y-%m-%d')
+        bars = self.api.get_bars(self.ticker, timeframe, start=self.start_date, end=end_date).df
+        data = pd.DataFrame(bars['close'])  # Select the 'close' column
+        data['returns'] = data['close'].pct_change()  # Calculate the 'returns' column
+        train_data = data[:int(train_size * len(data))]
+        test_data = data[int(train_size * len(data)):]
+        return train_data, test_data
+
+    # def test_strategy(self, ema_s, ema_l, data):
+    #     data['ema_s'] = data['close'].ewm(span=ema_s, adjust=False).mean()
+    #     data['ema_l'] = data['close'].ewm(span=ema_l, adjust=False).mean()
+    #     data.dropna(inplace=True)
+    #     data['position'] = np.where(data['ema_s'] > data['ema_l'], 1, -1)
+    #     data['strategy_returns'] = data['position'].shift(1) * data['returns']
+    #     data['cumulative_returns'] = (data['strategy_returns'] + 1).cumprod()
+    #     performance = data['cumulative_returns'].iloc[-1] if len(data) > 0 else None
+    #     return performance
+    
+    def test_strategy(self, ema_s, ema_l, data):
+        data['ema_s'] = data['close'].ewm(span=ema_s, adjust=False).mean()
+        data['ema_l'] = data['close'].ewm(span=ema_l, adjust=False).mean()
+        data.dropna(inplace=True)
+        data['position'] = np.where(data['ema_s'] > data['ema_l'], 1, -1)
+        data['strategy_returns'] = data['position'].shift(1) * data['returns']
+        data['cumulative_returns'] = (data['strategy_returns'] + 1).cumprod()
+
+        # Extract buy and sell signals
+        buy_signals = data[data['position'].diff() > 0]
+        sell_signals = data[data['position'].diff() < 0]
+
+        # Create a DataFrame with buy and sell signals
+        trade_df = pd.DataFrame({
+            'Buy Signal': buy_signals.index,
+            'Sell Signal': sell_signals.index,
+            'Buy Price': buy_signals['close'],
+            'Sell Price': sell_signals['close']
+        })
+
+        performance = data['cumulative_returns'].iloc[-1] if len(data) > 0 else None
+        return performance, data['cumulative_returns'], trade_df
+
+
+    def find_optimal_ema(self, timeframe):
+        best_performance = -np.inf
+        train_data, test_data = self.get_data(timeframe)
+
+        for ema_s in range(1, 50):
+            for ema_l in range(ema_s + 1, 50):
+                performance = self.test_strategy(ema_s, ema_l, train_data)
+
+                if performance is not None and performance > best_performance:
+                    best_performance = performance
+                    self.best_ema_s = ema_s
+                    self.best_ema_l = ema_l
+
+        if self.best_ema_s is not None and self.best_ema_l is not None:
+            test_performance = self.test_strategy(self.best_ema_s, self.best_ema_l, test_data)
+            print(f"Best EMA crossover strategy for {timeframe}: EMA_S={self.best_ema_s}, EMA_L={self.best_ema_l}")
+            print(f"Performance on training data: {best_performance}")
+            print(f"Performance on test data: {test_performance}")
+        else:
+            print(f"No valid strategy found for {timeframe}. Please check your data range.")
+
+    def plot_results(self, data):
+        ema_s = self.best_ema_s
+        ema_l = self.best_ema_l
+        data['ema_s'] = data['close'].ewm(span=ema_s, adjust=False).mean()
+        data['ema_l'] = data['close'].ewm(span=ema_l, adjust=False).mean()
+        data.dropna(inplace=True)
+
+        plt.figure(figsize=(12, 6))
+        plt.plot(data.index, data['close'], label='Price')
+        plt.plot(data.index, data['ema_s'], label=f'EMA ({ema_s})')
+        plt.plot(data.index, data['ema_l'], label=f'EMA ({ema_l})')
+        plt.title(f'{self.ticker} - EMA Crossover Strategy')
+        plt.xlabel('Date')
+        plt.ylabel('Price')
+        plt.legend()
+        plt.show()
+
+
+def main():
+    ticker = input("Enter the ticker symbol: ")
+    days_back = int(input("Enter the number of days going back: "))
+    backtester = EMACrossoverBacktester(ticker)
+    backtester.start_date = datetime.datetime.now() - timedelta(days=days_back)
+
+    train_performance, train_cumulative_returns, trade_df = backtester.test_strategy(10, 20, backtester.get_data('1D', days_back)[0])
+
+    if train_performance is not None:
+        print(f"Training Performance: {train_performance}")
+
+        train_data, _ = backtester.get_data('1D', days_back)
+        backtester.plot_results(train_data)
+
+        # Display trade signals
+        print("Trade Signals:")
+        print(trade_df)        
+        
+
+        
+# ticker = input("Enter the ticker symbol: ")
+# days_back = int(input("Enter the days back to test: "))
+# backtester = EMACrossoverBacktester(ticker)
+# backtester.find_optimal_ema('1D')
+# train_data, _ = backtester.get_data('1D')
+# backtester.plot_results(train_data)
+# performance, cumulative_returns, trade_df = backtester.test_strategy(ema_s, ema_l, train_data)
+# print(trade_df)
