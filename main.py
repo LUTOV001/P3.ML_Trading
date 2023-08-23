@@ -4,6 +4,8 @@ import pandas as pd
 from datetime import date, datetime, timedelta
 import yfinance as yf
 from plotly import graph_objs as go
+from prophet import Prophet
+from prophet.plot import plot_plotly
 
 
 # Title
@@ -24,26 +26,25 @@ st.subheader("Stock Ticker Data Analysis")
 
 # List of Tickers
 stocks = ['AAPL', 'MSFT','AMZN','GOOGL','META','IBM','NVDA', 'JPM','V','UNH']
-selected_stock = st.selectbox('Select a stock ticker from the list:', stocks)
+selected_stock = st.selectbox('Select a stock ticker and date range for analysis:', stocks)
 
-start_date = st.date_input("Start Date:", datetime.now() - timedelta(days=365))
+start_date = st.date_input("Start Date:", datetime.now() - timedelta(days=1825))
 end_date = st.date_input("End Date:")
 
 # Add a "Get Historic Price Data" button
 get_data_button = st.button("Get Historic Price Data")
 
-# Pull data from Yahoo Finance and cache data
-@st.cache_data
+# Pull data from Yahoo Finance 
 def load_data(ticker):
     data = yf.download(ticker, start_date, end_date)
     data.reset_index(inplace=True)
     return data
 
+data = load_data(selected_stock)
+
 # Execute data query when the button is pressed
 if get_data_button:
-    data = load_data(selected_stock)
-
-    st.subheader('Historical Stock Data')
+    st.write('__Historical Stock Data__')
     st.write(data)
 
     def plot_raw_data():
@@ -55,7 +56,42 @@ if get_data_button:
 
     plot_raw_data()
 
-st.subheader('LSTM ML Model Recommendation')
+st.subheader('Prophet Forecast')
+st.write(
+    """
+ Time series analysis involves analyzing time series data to identify meaningful patterns in the data. 
+ Time series forecasting involves using a model that's based on historical data to predict future values in the time series. 
+ Prophet is an open-source library for time series forecasting that Facebook developed to analyze their data and it automates the process of time series forecasting.
+    """
+)
+
+n_years = st.slider("Years of prediction:", 1, 4)
+period = n_years *365
+
+# Add a "Run Prophet Forecast" button
+prophet_button = st.button("Run Prophet Forecast")
+
+# Run LSTM ML Model and provide buy / sell recommendation if button is pressed
+if prophet_button: 
+# Run Propeht Forecast
+    df_train = data[['Date', 'Close']]
+    df_train = df_train.rename(columns={"Date": "ds", "Close":"y"})
+
+    m = Prophet()
+    m.fit(df_train)
+    future = m.make_future_dataframe(periods=period)
+    forecast = m.predict(future)
+
+    st.write('__Prophet Forecast Data__')
+    st.write(forecast.tail())
+
+    fig1 = plot_plotly(m, forecast)
+    fig1.layout.update(title = "Prophet Forecast Plot")
+    st.plotly_chart(fig1)
+    
+
+
+st.subheader('LSTM Model Recommendation')
 st.write(
     """
 LSTM (Long Short-Term Memory) is a type of recurrent neural network (RNN) machine learning model. 
