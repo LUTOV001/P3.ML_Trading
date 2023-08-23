@@ -1,7 +1,7 @@
 # Libraries
 import streamlit as st
 import pandas as pd
-from datetime import date, datetime, timedelta
+from datetime import datetime, timedelta
 import yfinance as yf
 from plotly import graph_objs as go
 from prophet import Prophet
