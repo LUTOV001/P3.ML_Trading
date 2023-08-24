@@ -4,103 +4,19 @@ from datetime import datetime, timedelta
 import yfinance as yf
 import numpy as np
 import matplotlib.pyplot as plt
+import tickerdata_app as app
 
 #1. Price Data
 
-# Read stock tickers from the CSV file
-#tickers_df = pd.read_csv('\Resources\stock_tickers.csv', header=None)
-tickers = ['AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'IBM', 'NVDA', 'JPM', 'V', 'UNH']
-tickers_df = pd.DataFrame(tickers)
-Nasdaq_NYSE_10 = tickers_df[0].tolist()
-
-st.title("Stock Ticker Data Analysis")
-
-# User input using Streamlit components
-#selected_ticker = st.selectbox("Select a stock ticker from the list:", Nasdaq_NYSE_10)
-selected_ticker = "AAPL"
-start_date = st.date_input("Start Date:", datetime.now() - timedelta(days=365))
-end_date = st.date_input("End Date:")
-
-# Add a "Get Historic Price Data" button
-get_data_button = st.button("Get Historic Price Data")
+selected_ticker = app.selected_stock
+start_date = app.start_date
+end_date = app.end_date
 
 # Convert dates to string format
 start_date_str = start_date.strftime('%Y-%m-%d')
 end_date_str = end_date.strftime('%Y-%m-%d')
 
-# Execute data query when the button is pressed
-if get_data_button:
-    # Fetch historical price data using yfinance
-    stock_data = yf.download(selected_ticker, start=start_date_str, end=end_date_str)
-
-    # Create a DataFrame with selected price data
-    stock_df = ()
-    stock_df = pd.DataFrame()
-    stock_df['High'] = stock_data['High']
-    stock_df['Low'] = stock_data['Low']
-    stock_df['Open'] = stock_data['Open']
-    stock_df['Close'] = stock_data['Close']
-
-    # Display the DataFrame
-    st.write(f"Historical price data for {selected_ticker} from {start_date_str} to {end_date_str}:")
-    st.dataframe(stock_df)
-
-#-------------------------------------------------------------
-#2. Technical Indicators: Simple Moving Average - Chart
-def calculate_sma(stock_data, window):
-    return stock_data['Close'].rolling(window=window).mean()
-
-# Streamlit
-st.title("Stock Technical Indicators")
-selected_ticker = st.text_input("Enter Ticker Symbol:", "AAPL")
-start_date = st.date_input("Start Date", pd.to_datetime('2020-01-01'))
-end_date = st.date_input("End Date", pd.to_datetime('2021-01-01'))
-
-# User input for Simple Moving Average
-show_sma = st.checkbox("Show Simple Moving Average")
-
-# Fetch data
-stock_data = yf.download(selected_ticker, start=start_date, end=end_date)
-
-# Calculate and plot indicators
-if show_sma:
-    st.write("Enter window values for moving averages:")
-    
-    short_sma_window = st.number_input("Short SMA Window", value=10)
-    long_sma_window = st.number_input("Long SMA Window", value=50)
-
-    st.write(f"You've chosen short SMA window: {short_sma_window} and long SMA window: {long_sma_window}")
-        
-    # Calculate moving averages
-    moving_averages = []
-    short_sma_window = int(short_sma_window)
-    long_sma_window = int(long_sma_window)
-    
-    if short_sma_window > 0 and long_sma_window > 0:
-        sma_short = calculate_sma(stock_data, short_sma_window)
-        sma_long = calculate_sma(stock_data, long_sma_window)
-        moving_averages.append((f'SMA {short_sma_window}', sma_short))
-        moving_averages.append((f'SMA {long_sma_window}', sma_long))
-
-   # Plot indicators
-    plt.figure(figsize=(10,6))
-    plt.plot(stock_data['Close'], label='Close Price', color='blue')
-
-    for label, ma in moving_averages:
-        plt.plot(ma, label=label)
-
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.title(f"{selected_ticker} Closing Price and Simple Moving Averages")
-    plt.legend()
-    st.pyplot(plt)
-    
-#---------------------------------------------------------------------------------
-
-#3. Technical Indicators: Simple Moving Average - Backtest
-# User input for Simple Moving Average
-show_sma_backtest = st.checkbox("Backtest your SMA strategy")
-stock_data = yf.download(selected_ticker, start=start_date, end=end_date)
+stock_data = yf.download(selected_ticker, start=start_date_str, end=end_date_str)
 
 # Create a DataFrame with selected price data
 stock_df = ()
@@ -109,10 +25,43 @@ stock_df['High'] = stock_data['High']
 stock_df['Low'] = stock_data['Low']
 stock_df['Open'] = stock_data['Open']
 stock_df['Close'] = stock_data['Close']
- 
-# Functions for calculations
-def calculate_sma(stock_df, window):
-    return stock_df['Close'].rolling(window=window, min_periods=1).mean()
+
+
+#-------------------------------------------------------------
+#2. Technical Indicators: Simple Moving Average - Chart
+
+def calculate_sma(stock_data, window):
+    return stock_data['Close'].rolling(window=window).mean()
+
+# Calculate and plot indicators
+def plot_sma(short_sma_window, long_sma_window, stock_data):
+        # Calculate moving averages
+        moving_averages = []
+        short_sma_window = int(short_sma_window)
+        long_sma_window = int(long_sma_window)
+
+        if short_sma_window > 0 and long_sma_window > 0:
+            sma_short = calculate_sma(stock_data, short_sma_window)
+            sma_long = calculate_sma(stock_data, long_sma_window)
+            moving_averages.append((f'SMA {short_sma_window}', sma_short))
+            moving_averages.append((f'SMA {long_sma_window}', sma_long))
+
+       # Plot indicators
+        plt.figure(figsize=(10,6))
+        plt.plot(stock_data['Close'], label='Close Price', color='blue')
+
+        for label, ma in moving_averages:
+            plt.plot(ma, label=label)
+
+        plt.xlabel("Date")
+        plt.ylabel("Price")
+        plt.title(f"{selected_ticker} Closing Price and Simple Moving Averages")
+        plt.legend()
+        st.pyplot(plt)
+    
+#---------------------------------------------------------------------------------
+
+#3. Technical Indicators: Simple Moving Average - Backtest
 
 def backtest_sma_crossover_strategy(stock_df, short_sma_window, long_sma_window):
     short_sma = calculate_sma(stock_df, short_sma_window)
@@ -143,38 +92,22 @@ def backtest_sma_crossover_strategy(stock_df, short_sma_window, long_sma_window)
     total_sma_strategy_return = (stock_df['Daily SMA Strategy Return'] + 1).prod()
     return total_sma_strategy_return
     
-# Activate the backtest based on checkbox state
-if show_sma_backtest:
-    # NOTE: You may want to check if stock_df exists or if it has required data
-    total_sma_strategy_return = backtest_sma_crossover_strategy(stock_df, short_sma_window, long_sma_window)
-    stock_df.to_csv('sma_crossover.csv', index=False)
-    total_sma_strategy_return = 100 * (total_sma_strategy_return - 1)
-    st.write(f"Total return of SMA Crossover Strategy: {total_sma_strategy_return:.2f}%")
-    # Optionally display the modified stock_df
-    # st.dataframe(stock_df)    
-    
 
 #-------------------------------------------------------------
 
 #4. Technical Indicators: Exponential Moving Average - Chart
 def calculate_ema(stock_data, window):
-    return stock_df['Close'].ewm(span=window, adjust=False).mean()
+    return stock_data['Close'].ewm(span=window, adjust=False).mean()
 
 # User input for Exponential Moving Average
 show_ema = st.checkbox("Show Exponential Moving Average")
 
 # Fetch data
-stock_data = yf.download(selected_ticker, start=start_date, end=end_date)
+#stock_data = yf.download(selected_ticker, start=start_date, end=end_date)
 
 # Calculate and plot indicators
-if show_ema:
-    st.write("Enter window values for exponential moving averages:")
-    
-    short_ema_window = st.number_input("Short EMA Window", key="EMA_S", value=10)
-    long_ema_window = st.number_input("Long EMA Window", key="EMA_L", value=50)
+def plot_ema(short_ema_window, long_ema_window, stock_data):
 
-    st.write(f"You've chosen EMA short window: {short_ema_window} and EMA long window: {long_ema_window}")
-        
     # Calculate moving averages
     moving_averages = []
     short_ema_window = int(short_ema_window)
@@ -199,14 +132,13 @@ if show_ema:
     plt.legend()
     st.pyplot(plt)
     
-    
 #---------------------------------------------------------------------------------
 
 # #5. Technical Indicators: Exponential Moving Average - Backtest
 
-# User input for Exponential Moving Average
-show_ema_backtest = st.checkbox("Backtest your EMA strategy")
-stock_data = yf.download(selected_ticker, start=start_date, end=end_date)
+# # User input for Exponential Moving Average
+# show_ema_backtest = st.checkbox("Backtest your EMA strategy")
+# stock_data = yf.download(selected_ticker, start=start_date, end=end_date)
 
 # # Create a DataFrame with selected price data
 # stock_df = ()
@@ -250,13 +182,13 @@ def backtest_ema_crossover_strategy(stock_df, short_ema_window, long_ema_window)
     return total_ema_strategy_return
     
 # Activate the backtest based on checkbox state
-if show_ema_backtest:
-    # NOTE: You may want to check if stock_df exists or if it has required data
-    total_ema_strategy_return = backtest_ema_crossover_strategy(stock_df, short_ema_window, long_ema_window)
-    stock_df.to_csv('ema_crossover.csv', index=False)
-    total_ema_strategy_return = 100 * (total_ema_strategy_return - 1)
-    st.write(f"Total return of EMA Crossover Strategy: {total_ema_strategy_return:.2f}%")
-    # Optionally display the modified stock_df
-    # st.dataframe(stock_df) 
+# if show_ema_backtest:
+#     # NOTE: You may want to check if stock_df exists or if it has required data
+#     total_ema_strategy_return = backtest_ema_crossover_strategy(stock_df, short_ema_window, long_ema_window)
+#     stock_df.to_csv('ema_crossover.csv', index=False)
+#     total_ema_strategy_return = 100 * (total_ema_strategy_return - 1)
+#     st.write(f"Total return of EMA Crossover Strategy: {total_ema_strategy_return:.2f}%")
+#     # Optionally display the modified stock_df
+#     # st.dataframe(stock_df) 
     
 #---------------------------------------------------------------------------------
