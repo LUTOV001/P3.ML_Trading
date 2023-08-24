@@ -3,8 +3,11 @@ import pandas as pd
 from datetime import datetime, timedelta
 import yfinance as yf
 
+
 # Read stock tickers from the CSV file
-tickers_df = pd.read_csv('Resources/stock_tickers.csv', header=None)
+#tickers_df = pd.read_csv('\Resources\stock_tickers.csv', header=None)
+tickers = ['AAPL', 'MSFT', 'AMZN', 'GOOGL', 'META', 'IBM', 'NVDA', 'JPM', 'V', 'UNH']
+tickers_df = pd.DataFrame(tickers)
 Nasdaq_NYSE_10 = tickers_df[0].tolist()
 
 st.title("Stock Ticker Data Analysis")
