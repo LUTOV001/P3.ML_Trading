@@ -25,6 +25,7 @@ stock_df['High'] = stock_data['High']
 stock_df['Low'] = stock_data['Low']
 stock_df['Open'] = stock_data['Open']
 stock_df['Close'] = stock_data['Close']
+stock_df['Volume'] = stock_data['Volume']
 
 
 #-------------------------------------------------------------

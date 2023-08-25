@@ -9,6 +9,9 @@ from prophet.plot import plot_plotly
 import numpy as np
 import matplotlib.pyplot as plt
 import tickerdata_ms_app as ms_app
+import machine_learning as ml_app
+import alpaca_trade_api as tradeapi
+
 
 # Title
 st.title('Stock Trading Using Machine Learning')
@@ -164,22 +167,76 @@ lstm_button = st.button("Get Recommendation")
 # Run LSTM ML Model and provide buy / sell recommendation if button is pressed
 # if lstm_button: 
 
-# Get input from user on how much to spend
-amounts = ['100','1,000','10,000','100,000']
-investment_amount = st.selectbox('How much do you want to invest (in USD)?', amounts)
+# ---------------------------------------------------------------------------------------------
+st.subheader('Supervised Learning Algorithm Recommendation')
+st.write(
+    """
+SVM is a supervised learning algorithm used for both regression and classification tasks. In this case, it seems to be used for classification, where the goal is to predict whether the trading signal will be positive (+1) or negative (-1) based on the features derived from technical indicators and historical price data.
+    """
+)
 
+svm_testing_report, predictions_df, actual_returns_cum, strategy_returns_cum = ml_app.drive_machine_learning (selected_stock, start_date, end_date)
+    
+# Create a button to trigger analysis
+if st.button("Get Recommendation", key="SVM"):
+    
+    # Display most recent trading signal prediction
+    latest_signal_prediction = ml_app.predictions_df['Predicted'].iloc[-1]
+    st.write(f"Most Recent Trading Signal Prediction: {latest_signal_prediction}")
+    
+    # Display SVM testing report
+    svm_testing_report = ml_app.svm_testing_report
+    st.write("SVM Testing Report:")
+    st.write(svm_testing_report)
+    
+    # Display returns report
+    actual_returns_cum = ml_app.actual_returns_cum
+    strategy_returns_cum = ml_app.strategy_returns_cum
+    st.write("Returns Report:")
+    st.write(f"Total Actual Returns: {actual_returns_cum:.2f}%")
+    st.write(f"Total Strategy Returns: {strategy_returns_cum:.2f}%")
+
+# -----------------------------------------------------------------------------------------------
+# Trading Execution
 
 st.subheader('Execute Trade using Alpacas')
 
-st.write("Selected Stock:", selected_stock)
-st.write("Investment Amount: $", investment_amount)
+# Set up Alpaca API
 
+API_KEY = "PKLKK4Y1DQJ9TQ8JBRZS"
+API_SECRET = "VwYnY5BDW2GPkRtCRhXebcasmocMFD2yecPYIGTH"
+api = tradeapi.REST(API_KEY, API_SECRET, base_url='https://paper-api.alpaca.markets')  # Using paper trading URL
 
+# Get input from user on how much to spend
+amounts = ['100','1,000','10,000','100,000']
+investment_amount = st.selectbox('How much do you want to invest (in USD)?', amounts, key="investment_amount")
+st.write(f"You've chosen : {investment_amount}.")
 
-# Add a "Execute Trade" button
-execute_trade_button = st.button("Execute Trade")
+# Input parameters
+ticker = selected_stock
+quantity = st.number_input("Enter Quantity:", 1, key="share_number" )
+action = st.radio("Select Action:", ["Buy", "Sell"])
 
-# Execute trade through Alpaca when the button is pressed
-# if execute_trade_button:
-    # enter code to return remaining cash balance (Matt's code)
-    # enter code to return report of open positions (Matt's code)
+if st.button("Execute Trade", key="execute_trade"):
+    if action == "Buy":
+        api.submit_order(
+            symbol=ticker,
+            qty=quantity,
+            side='buy',
+            type='market',
+            time_in_force='gtc'
+        )
+        st.success(f"Successfully bought {quantity} shares of {ticker}!")
+    else:
+        api.submit_order(
+            symbol=ticker,
+            qty=quantity,
+            side='sell',
+            type='market',
+            time_in_force='gtc'
+        )
+        st.success(f"Successfully sold {quantity} shares of {ticker}!")
+
+# Display account info (optional)
+account = api.get_account()
+st.write(f"Current Account Balance: ${account.cash}")
