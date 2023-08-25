@@ -40,7 +40,6 @@ convertdate==2.4.0
 coverage==6.5.0
 coveralls==3.3.1
 cssselect==1.2.0
-daal4py==2021.6.0
 dask==2021.10.0
 datashape==0.5.4
 DateTime==5.1
