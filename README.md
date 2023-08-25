@@ -90,7 +90,7 @@ To run this analysis, make sure you install the necessary dependencies:
 
 ```pip install -r requirements.txt```
 
-# Usage
+## Usage
 
 1. Open a terminal or command prompt and navigate to the directory with the python file.
 2. In the terminal, run the Streamlit application by using streamlit run fintech_finder.py.
@@ -102,18 +102,19 @@ streamlit run tickerdata_app.py
 5. Run machine learning models and simulations for recommendation
 6. Execute trades via Alpacas 
 
-# Python File Details
-tickerdata_app.py - main app with streamlit code
-machine_learning.py - machine learning code
-tickerdata_ms_app.py - technical analysis code
+### Python File Details
 
-# Streamlit Screenshots
+- '''tickerdata_app.py''' - main app with streamlit code
+- '''machine_learning.py''' - machine learning code
+- '''tickerdata_ms_app.py''' - technical analysis code
+
+### Streamlit Screenshots
 
 ![streamlit](streamlit.png)
 ![streamlit2](streamlit2.png)
 ![streamlit_alpacas](streamlit_alpacas.png)
 
-# Alpacas Dashboard Screenshot
+### Alpacas Dashboard Screenshot
 ![alpacas](alpacas.png)
 
 ## Contributors
