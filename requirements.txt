@@ -34,8 +34,6 @@ cmdstanpy==1.1.0
 coincurve==18.0.0
 commonmark==0.9.1
 comtypes==1.1.10
-conda==23.1.0
-condacolab==0.1.4
 configparser==5.3.0
 constantly==15.1.0
 convertdate==2.4.0
