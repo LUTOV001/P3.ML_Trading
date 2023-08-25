@@ -30,7 +30,7 @@ profitable trading strategies based on the results of the machine learning model
 
 st.subheader("Stock Ticker Data Analysis")
 
-start_date = st.date_input("Start Date:", datetime.now() - timedelta(days=1825))
+start_date = st.date_input("Start Date:", datetime.now() - timedelta(days=1825), key="start_date_input")
 end_date = st.date_input("End Date:")
 
 # List of Tickers
@@ -81,8 +81,8 @@ show_sma = st.checkbox("Show Simple Moving Average", key="plot_sma")
 
 if show_sma:
         st.write("Enter window values for moving averages:")
-        short_sma_window = st.number_input("Short SMA Window", value=10)
-        long_sma_window = st.number_input("Long SMA Window", value=50)
+        short_sma_window = st.number_input("Short SMA Window", value=10, key="short_sma_window")
+        long_sma_window = st.number_input("Long SMA Window", value=50, key="long_sma_window")
         st.write(f"You've chosen short SMA window:  {short_sma_window} and long SMA window: {long_sma_window}")    
         
         ms_app.plot_sma(short_sma_window, long_sma_window, data)
@@ -100,8 +100,8 @@ show_ema = st.checkbox("Show Exponential Moving Average", key="plot_ema")
 
 if show_ema:
         st.write("Enter window values for moving averages:")
-        short_ema_window = st.number_input("Short EMA Window", value=10)
-        long_ema_window = st.number_input("Long EMA Window", value=50)
+        short_ema_window = st.number_input("Short EMA Window", value=10, key="short_ema_window")
+        long_ema_window = st.number_input("Long EMA Window", value=50, key="long_ema_window")
         st.write(f"You've chosen short EMA window: {short_ema_window} and long EMA window: {long_ema_window}")
 
         ms_app.plot_ema(short_ema_window, long_ema_window, data)
@@ -171,7 +171,10 @@ if show_ema_backtest:
 st.subheader('Supervised Learning Algorithm Recommendation')
 st.write(
     """
-SVM is a supervised learning algorithm used for both regression and classification tasks. In this case, it seems to be used for classification, where the goal is to predict whether the trading signal will be positive (+1) or negative (-1) based on the features derived from technical indicators and historical price data.
+Support Vector Machines (SVM) is a supervised learning algorithm used for both regression and 
+classification tasks. In this case, we leveraged it for classification, where the goal was to predict whether the trading 
+signal will be positive (+1) or negative (-1) based on the features derived from technical indicators and historical price data which represent 
+the buy (+1) / sell (-1) recommendation.
     """
 )
 
