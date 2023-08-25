@@ -68,8 +68,8 @@ def create_data_df(data_df):  # Add data_df as an argument
         data_df[macd_column_name] = macd_values[0]  # Extract MACD line
 
     # Calculate price change
-    data_df['Price Change -10d'] = (data_df['Close'] - data_df['Close'].shift(10)) / data_df['Close'] * 100
-
+    data_df['Price_Change_minus_10d'] = (data_df['Close'] - data_df['Close'].shift(10)) / data_df['Close'] * 100
+        
     # Calculate actual daily returns
     data_df['Actual Returns'] = data_df['Close'].pct_change()
 
@@ -100,8 +100,8 @@ def make_clean_data_df(data_df):
 
 def generate_signal_price(clean_data_df):
     conditions = [
-        (clean_data_df['Price Change %-10d'].to_numpy() > 0),
-        (clean_data_df['Price Change %-10d'].to_numpy() < 0)
+        (clean_data_df['Price_Change_minus_10d'].to_numpy() > 0),
+        (clean_data_df['Price_Change_minus_10d'].to_numpy() < 0)
     ]
 
     choices = [1, -1]
@@ -114,39 +114,22 @@ def generate_signal_price(clean_data_df):
 
 def prepare_training_testing_data(clean_data_df):
     # Create Training and Testing Datasets
-    X = clean_data_df.drop(['Symbol', 'Signal', 'Price Change %-10d'], axis=1)
+    X = clean_data_df.drop(['Signal', 'Price_Change_minus_10d'], axis=1)
 
     # Define the target set y 
     y = clean_data_df['Signal']
 
-    # Select the start of the training period
-    training_begin = X.index.min()
-
-    # Calculate the index for the training data end (70% of the dataset)
-    training_data_length = int(len(X) * 0.7)
-    training_end_index = X.index[training_data_length]
-
-    # Convert the index to a datetime format
-    training_end = X.index.to_series().loc[training_end_index]
-
-    # Generate the X_train and y_train DataFrames
-    X_train = X.loc[training_begin:training_end]
-    y_train = y.loc[training_begin:training_end]
-    X_test = X.loc[training_end:]
-    y_test = y.loc[training_end:]
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, shuffle=False)
 
     # Create a StandardScaler instance
     scaler = StandardScaler()
 
     # Apply the scaler model to fit the X-train data
-    X_scaler = scaler.fit(X_train)
-
-    # Transform the X_train and X_test DataFrames using the X_scaler
-    X_train_scaled = X_scaler.transform(X_train)
-    X_test_scaled = X_scaler.transform(X_test)
+    X_train_scaled = scaler.fit_transform(X_train)
+    X_test_scaled = scaler.transform(X_test)
 
     return X_train_scaled, y_train, X_test_scaled, y_test
-
 
 
 #----------------------------------------------------------------------------------------------------
@@ -171,7 +154,7 @@ def get_classification_report (X_train_scaled, y_train, X_test_scaled, y_test):
 
 def make_predictions_df(X_test, training_signal_predictions, clean_data_df):
     # Create a predictions DataFrame
-    predictions_df = pd.DataFrame(index=X_test.index)
+    predictions_df = pd.DataFrame(index=range(len(X_test)))
 
     # Add the SVM model predictions to the DataFrame
     predictions_df['Predicted'] = training_signal_predictions
@@ -201,8 +184,6 @@ def returns_report(predictions_df):
 
 def drive_machine_learning (selected_ticker, start_date, end_date):
     
-#     #1. Price Data
-
 #     selected_ticker = app.selected_stock
 #     start_date = app.start_date
 #     end_date = app.end_date
@@ -212,24 +193,22 @@ def drive_machine_learning (selected_ticker, start_date, end_date):
     end_date_str = end_date.strftime('%Y-%m-%d')
 
     stock_data = yf.download(selected_ticker, start=start_date_str, end=end_date_str)
-    
     stock_df = create_df(stock_data, selected_ticker, start_date, end_date)
-
     data_df = create_data_df(stock_df)  # Call the function with your DataFrame
-    
+
     clean_data_df = make_clean_data_df(data_df)
-  
+
     # Call the function on your DataFrame
     generate_signal_price(clean_data_df)
 
     # Fill NaN values with 0 and convert the signal to int
     clean_data_df['Signal'] = clean_data_df['Signal'].fillna(0).astype(int)
-    
+
     X_train_scaled, y_train, X_test_scaled, y_test = prepare_training_testing_data(clean_data_df)
 
-    svm_testing_report, training_signal_predictions = get_classification_report (X_train_scaled, y_train, X_test_scaled, y_test)
+    svm_testing_report, training_signal_predictions = get_classification_report(X_train_scaled, y_train, X_test_scaled, y_test)
 
-    predictions_df = make_predictions_df(X_test, training_signal_predictions, clean_data_df)
+    predictions_df = make_predictions_df(X_test_scaled, training_signal_predictions, clean_data_df)
 
     actual_returns_cum, strategy_returns_cum = returns_report(predictions_df)
     
