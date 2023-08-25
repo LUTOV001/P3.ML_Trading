@@ -110,8 +110,6 @@ streamlit run main.py
 - [Michelle Silver](https://github.com/supersilver1978)
 - [Luis Torres](https://github.com/LUTOV001)
 
-## License
-License information can be found in the included LICENSE file.
 
 ## Resources / Credits
 Code for generating the Machine Learning Models was modified from code provided by UC Berkeley Extension FinTech Bootcamp
@@ -120,19 +118,18 @@ Analysis of Financial Time Series, 3rd Edition, Ruey S. Tsay
 Quantitative Equity Investing: Techniques and Strategies, Frank J. Fabozzi, Sergio M. Focardi, Petter N. Kolm
 
 ## Future Research
-- Integrating Risk Tolerance Survey from Project 1
-- Explore other machine learning models
-- Runtime/ Resource efficiency
+- Link to Portfolio optimization solution
 - Test on other asset classes, stocks and sectors
-- Test on ‘paper trading’ mode
+- Incorporate LSTM for target price based decision making
 
 ## Future Releases
-- Add UI/UX
-- API integration
-- Deploy to the cloud
-- Blockchain record keeping 
-- Adding macroeconomic market information for the client
-- Improve visualizations
+- Deploy to the cloud to run virtually
+● Integrate Chatbot functionality
+● Technical indicator optimization
+● Fully automated algo-trading bot with profit and after market options
 
 ## Disclaimer
 The information provided through this application is for information and educational purposes only. It is not intended to be, nor should it be used as, investment advice. Seek a duly licensed professional for investment advice.
+
+## License
+License information can be found in the included LICENSE file.
