@@ -107,14 +107,13 @@ tickerdata_app.py - main app with streamlit code
 machine_learning.py - machine learning code
 tickerdata_ms_app.py - technical analysis code
 
-# Screenshots
+# Streamlit Screenshots
 
-Streamlit 
 ![streamlit](streamlit.png)
 ![streamlit2](streamlit2.png)
 ![streamlit_alpacas](streamlit_alpacas.png)
 
-Alpacas Dashboard 
+# Alpacas Dashboard Screenshot
 ![alpacas](alpacas.png)
 
 ## Contributors
