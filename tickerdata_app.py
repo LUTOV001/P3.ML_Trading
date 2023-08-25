@@ -116,56 +116,56 @@ if show_ema_backtest:
 # ---------------------------------------------------------------------------
 # # resume Mike's code
 
-st.subheader('Prophet Forecast')
-st.write(
-    """
- Time series analysis involves analyzing time series data to identify meaningful patterns in the data. 
- Time series forecasting involves using a model that's based on historical data to predict future values in the time series. 
- Prophet is an open-source library for time series forecasting that Facebook developed to analyze their data and it automates the process of time series forecasting.
-    """
-)
+# st.subheader('Prophet Forecast')
+# st.write(
+#     """
+#  Time series analysis involves analyzing time series data to identify meaningful patterns in the data. 
+#  Time series forecasting involves using a model that's based on historical data to predict future values in the time series. 
+#  Prophet is an open-source library for time series forecasting that Facebook developed to analyze their data and it automates the process of time series forecasting.
+#     """
+# )
 
-n_years = st.slider("Years of prediction:", 1, 4)
-period = n_years *365
+# n_years = st.slider("Years of prediction:", 1, 4)
+# period = n_years *365
 
-# Add a "Run Prophet Forecast" button
-prophet_button = st.button("Run Prophet Forecast")
+# # Add a "Run Prophet Forecast" button
+# prophet_button = st.button("Run Prophet Forecast")
 
-# Run LSTM ML Model and provide buy / sell recommendation if button is pressed
-if prophet_button: 
-# Run Propeht Forecast
-    df_train = data[['Date', 'Close']]
-    df_train = df_train.rename(columns={"Date": "ds", "Close":"y"})
+# # Run LSTM ML Model and provide buy / sell recommendation if button is pressed
+# if prophet_button: 
+# # Run Propeht Forecast
+#     df_train = data[['Date', 'Close']]
+#     df_train = df_train.rename(columns={"Date": "ds", "Close":"y"})
 
-    m = Prophet()
-    m.fit(df_train)
-    future = m.make_future_dataframe(periods=period)
-    forecast = m.predict(future)
+#     m = Prophet()
+#     m.fit(df_train)
+#     future = m.make_future_dataframe(periods=period)
+#     forecast = m.predict(future)
 
-    st.write('__Prophet Forecast Data__')
-    st.write(forecast.tail())
+#     st.write('__Prophet Forecast Data__')
+#     st.write(forecast.tail())
 
-    fig1 = plot_plotly(m, forecast)
-    fig1.layout.update(title = "Prophet Forecast Plot")
-    st.plotly_chart(fig1)
+#     fig1 = plot_plotly(m, forecast)
+#     fig1.layout.update(title = "Prophet Forecast Plot")
+#     st.plotly_chart(fig1)
     
 
 
-st.subheader('LSTM Model Recommendation')
-st.write(
-    """
-LSTM (Long Short-Term Memory) is a type of recurrent neural network (RNN) machine learning model. 
-LSTM networks are particularly well-suited for time series forecasting tasks due to their ability to 
-capture sequential dependencies and patterns in the data.  Here we will use the LSTM ML Model to predict 
-the future stock price selected and provide a buy / sell recommendation based on predicted stock price. 
-    """
-)
+# st.subheader('LSTM Model Recommendation')
+# st.write(
+#     """
+# LSTM (Long Short-Term Memory) is a type of recurrent neural network (RNN) machine learning model. 
+# LSTM networks are particularly well-suited for time series forecasting tasks due to their ability to 
+# capture sequential dependencies and patterns in the data.  Here we will use the LSTM ML Model to predict 
+# the future stock price selected and provide a buy / sell recommendation based on predicted stock price. 
+#     """
+# )
 
-# Add a "Run LSTM ML Model" button
-lstm_button = st.button("Get Recommendation")
+# # Add a "Run LSTM ML Model" button
+# lstm_button = st.button("Get Recommendation")
 
-# Run LSTM ML Model and provide buy / sell recommendation if button is pressed
-# if lstm_button: 
+# # Run LSTM ML Model and provide buy / sell recommendation if button is pressed
+# # if lstm_button: 
 
 # ---------------------------------------------------------------------------------------------
 st.subheader('Supervised Learning Algorithm Recommendation')

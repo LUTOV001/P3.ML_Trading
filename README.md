@@ -53,9 +53,8 @@ The following process has been followed to test and select the most suitable mod
     
 3. Model Performance/Selection
     Models were evaluated using accuracy score and plotting of returns being the primary metrics.
-      Foundational Models
-      - Long Short-Term Memory (LTSM) Neural Network [timeseries using lstm](https://github.com/LUTOV001/P2_ML_AlgoTrade/blob/main/1_malikaajmera/timeseries%20using%20lstm.ipynb)
-      - Decision Tree Classifier [index_info_updated_MS](https://github.com/LUTOV001/P2_ML_AlgoTrade/blob/main/5_michellesilver/index_info_updated_MS.ipynb)
+      Foundational Model
+      - Support Vector Machines [svm_model](https://github.com/LUTOV001/P3.ML_Trading/blob/main/machine_learning.py)
 
 
 ## Technologies
@@ -96,20 +95,34 @@ To run this analysis, make sure you install the necessary dependencies:
 1. Open a terminal or command prompt and navigate to the directory with the python file.
 2. In the terminal, run the Streamlit application by using streamlit run fintech_finder.py.
 ```
-streamlit run main.py 
+streamlit run tickerdata_app.py 
 ```
-3. Select stock for analysis 
-4. Run ML models and simulations for recommendation
-5. Execute trades via Alpacas 
+3. Select stock for analysis
+4. Select technical indicators for analysis 
+5. Run machine learning models and simulations for recommendation
+6. Execute trades via Alpacas 
 
+# Python File Details
+tickerdata_app.py - main app with streamlit code
+machine_learning.py - machine learning code
+tickerdata_ms_app.py - technical analysis code
+
+# Screenshots
+
+Streamlit 
+![streamlit](streamlit.png)
+![streamlit2](streamlit2.png)
+![streamlit_alpacas](streamlit_alpacas.png)
+
+Alpacas Dashboard 
+![alpacas](alpacas.png)
 
 ## Contributors
-- [Malika Ajmera](https://github.com/malika0410)
 - [Matthew Glasgow](https://github.com/Slay1007)
 - [Mike Nguyen](https://github.com/mikenguyenx)
 - [Michelle Silver](https://github.com/supersilver1978)
 - [Luis Torres](https://github.com/LUTOV001)
-
+- [Malika Ajmera](https://github.com/malika0410)
 
 ## Resources / Credits
 Code for generating the Machine Learning Models was modified from code provided by UC Berkeley Extension FinTech Bootcamp
