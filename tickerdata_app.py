@@ -185,7 +185,8 @@ if st.button("Get Recommendation", key="SVM"):
     
     # Display most recent trading signal prediction
     latest_signal_prediction = predictions_df['Predicted'].iloc[-1]
-    st.write(f"Most Recent Trading Signal Prediction: {latest_signal_prediction}")
+    latest_signal_predictionBS = "Sell" if latest_signal_prediction == -1 else "Buy" #Revised to convert to Buy/Sell
+    st.write(f"Most Recent Trading Signal Prediction: {latest_signal_predictionBS}")
     
     # Display SVM testing report
     st.write("SVM Testing Report:")
