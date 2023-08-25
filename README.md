@@ -81,7 +81,7 @@ Operating System(s):  Any operating system that supports Python, including Windo
 To run this analysis, make sure you install the necessary dependencies:
 
 
-1. Clone the repository: git clone "git@github.com:LUTOV001/P3.ML_Trading.git" using git or download the ZIP file and extract it to a local directory.
+1. Clone the repository: git clone git@github.com:LUTOV001/P3.ML_Trading.git using git or download the ZIP file and extract it to a local directory.
 
 2. Packages may be individually installed into the environment of your choice or you may create a new conda environment using the included environment.yml file.
 
@@ -124,9 +124,9 @@ Quantitative Equity Investing: Techniques and Strategies, Frank J. Fabozzi, Serg
 
 ## Future Releases
 - Deploy to the cloud to run virtually
-● Integrate Chatbot functionality
-● Technical indicator optimization
-● Fully automated algo-trading bot with profit and after market options
+- Integrate Chatbot functionality
+- Technical indicator optimization
+-  Fully automated algo-trading bot with profit and after market options
 
 ## Disclaimer
 The information provided through this application is for information and educational purposes only. It is not intended to be, nor should it be used as, investment advice. Seek a duly licensed professional for investment advice.
