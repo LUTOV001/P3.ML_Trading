@@ -108,6 +108,10 @@ streamlit run tickerdata_app.py
 - machine_learning.py - machine learning code
 - tickerdata_ms_app.py - technical analysis code
 
+### Streamlit Video
+
+<video src="FinTechButlers_AlgoBot.mp4" controls title="Stock Trading using Machine Learning"></video>
+
 ### Streamlit Screenshots
 
 ![streamlit](Resources/streamlit.png)
