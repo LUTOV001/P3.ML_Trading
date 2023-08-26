@@ -173,7 +173,6 @@ starlette==0.22.0
 stockstats==0.6.2
 streamlit==1.22.0
 tensorboard==1.14.0
-tensorboard-data-server==0.6.1
 tensorflow==1.14.0
 tensorflow-estimator==1.14.0
 tensorflow-intel==2.11.0
