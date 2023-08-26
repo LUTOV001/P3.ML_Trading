@@ -1,2 +1,0 @@
-Machine Learning Trading Bot
-
