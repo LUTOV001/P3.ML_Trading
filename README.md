@@ -110,12 +110,12 @@ streamlit run tickerdata_app.py
 
 ### Streamlit Screenshots
 
-![streamlit](streamlit.png)
-![streamlit2](streamlit2.png)
-![streamlit_alpacas](streamlit_alpacas.png)
+![streamlit](Resources/streamlit.png)
+![streamlit2](Resources/streamlit2.png)
+![streamlit_alpacas](Resources/streamlit_alpacas.png)
 
 ### Alpacas Dashboard Screenshot
-![alpacas](alpacas.png)
+![alpacas](Resources/alpacas.png)
 
 ## Contributors
 - [Matthew Glasgow](https://github.com/Slay1007)
