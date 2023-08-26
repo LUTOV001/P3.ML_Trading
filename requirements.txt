@@ -31,6 +31,7 @@ click-plugins==1.1.1
 cligj==0.7.2
 clyent<=1.2.2
 matplotlib>=2.2.5, <=3.5.3
+websockets<=10.4
 yahoo-fin==0.8.9.1
 yarl==1.8.2
 yfinance==0.2.18
