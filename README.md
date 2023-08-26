@@ -110,7 +110,11 @@ streamlit run tickerdata_app.py
 
 ### Streamlit Video
 
-<video src="FinTechButlers_AlgoBot.mp4" controls title="Stock Trading using Machine Learning"></video>
+[![Fintech Butlers](https://youtu.be/Krq2-CeDmzA)](https://youtu.be/Krq2-CeDmzA)
+
+<!-- Replace https://example.com/video_thumbnail.jpg with the URL of a thumbnail image for your video. This can be an image screenshot or any other image you'd like to use as a preview for the video.
+
+Replace https://www.youtube.com/watch?v=your_video_id with the actual URL of your video on the hosting platform. -->
 
 ### Streamlit Screenshots
 
