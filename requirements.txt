@@ -166,7 +166,6 @@ requests-html==0.10.0
 requests-oauthlib==1.3.1
 rfc3986==1.5.0
 rich==12.6.0
-rlp==2.0.1
 scikit-learn-intelex==2021.20221004.171341
 semantic-version==2.10.0
 sgmllib3k==1.0.0
