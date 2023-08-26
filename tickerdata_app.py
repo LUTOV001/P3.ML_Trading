@@ -2,7 +2,8 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
-pip install yfinance
+import subprocess
+subprocess.run(["pip", "install", "yfinance"])
 import yfinance as yf
 from plotly import graph_objs as go
 from prophet import Prophet
@@ -12,7 +13,7 @@ import matplotlib.pyplot as plt
 import tickerdata_ms_app as ms_app
 import machine_learning as ml_app
 import alpaca_trade_api as tradeapi
-pip install yfinance as yf
+
 
 
 # Title
