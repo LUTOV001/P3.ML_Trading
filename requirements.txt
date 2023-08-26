@@ -41,3 +41,4 @@ plotly
 prophet
 hvplot
 xgboost
+TA-Lib
