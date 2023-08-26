@@ -110,7 +110,7 @@ streamlit run tickerdata_app.py
 
 ### Streamlit Video
 
-[![Fintech Butlers](https://youtu.be/Krq2-CeDmzA)](https://youtu.be/Krq2-CeDmzA)
+[![fintech_butlers]](https://youtu.be/Krq2-CeDmzA)
 
 <!-- Replace https://example.com/video_thumbnail.jpg with the URL of a thumbnail image for your video. This can be an image screenshot or any other image you'd like to use as a preview for the video.
 
