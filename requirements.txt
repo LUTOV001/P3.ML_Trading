@@ -38,3 +38,4 @@ yfinance==0.2.18
 zict==2.1.0
 zstandard==0.19.0
 plotly
+prophet
