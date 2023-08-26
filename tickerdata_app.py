@@ -2,6 +2,8 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime, timedelta
+import subprocess
+subprocess.run(["pip", "install", "yfinance"])
 import yfinance as yf
 from plotly import graph_objs as go
 from prophet import Prophet
@@ -13,12 +15,13 @@ import machine_learning as ml_app
 import alpaca_trade_api as tradeapi
 
 
+
 # Title
 st.title('Stock Trading Using Machine Learning')
 
 
 # Content
-st.image('./trading_bot.jpg')
+#st.image('./trading_bot.jpg')
 
 st.write(
     """
