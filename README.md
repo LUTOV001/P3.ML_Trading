@@ -104,9 +104,9 @@ streamlit run tickerdata_app.py
 
 ### Python File Details
 
-- '''tickerdata_app.py''' - main app with streamlit code
-- '''machine_learning.py''' - machine learning code
-- '''tickerdata_ms_app.py''' - technical analysis code
+- tickerdata_app.py - main app with streamlit code
+- machine_learning.py - machine learning code
+- tickerdata_ms_app.py - technical analysis code
 
 ### Streamlit Screenshots
 
