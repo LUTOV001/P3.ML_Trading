@@ -162,7 +162,6 @@ PyYAML==5.4.1
 questionary==1.10.0
 queuelib==1.5.0
 redis==4.5.4
-requests-html==0.10.0
 scikit-learn-intelex==2021.20221004.171341
 semantic-version==2.10.0
 sgmllib3k==1.0.0
