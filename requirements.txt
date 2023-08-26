@@ -154,7 +154,6 @@ Pympler==1.0.1
 pynecone==0.1.24
 pypiwin32==223
 pyppeteer==1.0.2
-pyproj==2.6.1.post1
 PyQt5==5.15.7
 pyquery==2.0.0
 pyreadline==2.1
