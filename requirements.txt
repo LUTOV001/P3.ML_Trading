@@ -162,7 +162,6 @@ pytest==7.1.2
 pytest-cov==4.0.0
 python-dotenv==0.21.1
 python-engineio==4.4.0
-python-lsp-jsonrpc==1.0.0
 pywin32==305.1
 PyYAML==5.4.1
 questionary==1.10.0
