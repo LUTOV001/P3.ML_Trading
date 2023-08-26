@@ -133,7 +133,6 @@ parsimonious==0.8.1
 patsy==0.5.3
 pep8==1.7.1
 Pillow==9.4.0
-platformdirs==3.10.0
 ply==3.11
 polygon-api-client==0.2.11
 prophet==1.1.3
