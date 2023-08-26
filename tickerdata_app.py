@@ -18,7 +18,7 @@ st.title('Stock Trading Using Machine Learning')
 
 
 # Content
-st.image('./trading_bot.jpg')
+#st.image('./trading_bot.jpg')
 
 st.write(
     """
