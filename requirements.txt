@@ -142,7 +142,6 @@ pyarrow==11.0.0
 pyasn1-modules==0.2.8
 pycrypto==2.6.1
 pycryptodome==3.18.0
-pycurl==7.45.1
 pydantic==1.10.2
 pydeck==0.8.1b0
 PyDispatcher==2.0.5
