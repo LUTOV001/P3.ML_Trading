@@ -160,7 +160,6 @@ pyreadline==2.1
 pystan==2.19.1.1
 pytest==7.1.2
 pytest-cov==4.0.0
-python-dotenv==0.21.1
 pywin32==305.1
 PyYAML==5.4.1
 questionary==1.10.0
