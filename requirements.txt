@@ -174,7 +174,6 @@ stockstats==0.6.2
 streamlit==1.22.0
 ta==0.10.2
 tables==3.6.1
-tabpy==2.7.0
 TBB==0.2
 tensorboard==1.14.0
 tensorboard-data-server==0.6.1
